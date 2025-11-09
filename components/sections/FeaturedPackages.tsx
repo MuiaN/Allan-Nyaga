@@ -53,29 +53,30 @@ const packages = [
 
 export default function FeaturedPackages() {
   const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+  const [count, setCount] = React.useState(0);
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
-
-  const onSelect = React.useCallback((api: CarouselApi) => {
-    if (!api) return;
-    setCanScrollPrev(api.canScrollPrev());
-    setCanScrollNext(api.canScrollNext());
-  }, []);
 
   React.useEffect(() => {
     if (!api) return;
 
-    api.on('select', onSelect);
-    api.on('reInit', onSelect);
+    const updateState = () => {
+      setCount(api.scrollSnapList().length);
+      setCurrent(api.selectedScrollSnap() + 1);
+      setCanScrollPrev(api.canScrollPrev());
+      setCanScrollNext(api.canScrollNext());
+    };
 
-    // Set initial state
-    onSelect(api);
+    updateState();
+    api.on('select', updateState);
+    api.on('reInit', updateState);
 
     return () => {
-      api.off('select', onSelect);
-      api.off('reInit', onSelect);
+      api.off('select', updateState);
+      api.off('reInit', updateState);
     };
-  }, [api, onSelect]);
+  }, [api]);
 
   return (
     <section id="packages" className="py-20 bg-white">
@@ -158,7 +159,7 @@ export default function FeaturedPackages() {
             </CarouselContent>
           </Carousel>
 
-          <div className="flex justify-center gap-4 mt-8">
+          <div className="flex justify-center items-center gap-4 mt-8">
             <Button
               variant="outline"
               size="icon"
@@ -168,6 +169,11 @@ export default function FeaturedPackages() {
             >
               <ChevronLeft className="w-5 h-5" />
             </Button>
+            
+            <div className="text-center text-sm text-gray-500 font-medium">
+              {current} / {count}
+            </div>
+
             <Button
               variant="outline"
               size="icon"
