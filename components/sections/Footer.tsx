@@ -1,6 +1,6 @@
 'use client';
 
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, X, Mail, Phone, MapPin, Link } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -29,7 +29,7 @@ export default function Footer() {
                 href="#"
                 className="w-10 h-10 bg-white/10 hover:bg-amber-600 rounded-full flex items-center justify-center transition-colors"
               >
-                <Twitter className="w-5 h-5" />
+                <X className="w-5 h-5" />
               </a>
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              © 2024 Safari Adventures Kenya. All rights reserved.
+              © {new Date().getFullYear()} Safari Adventures Kenya. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm text-gray-400">
               <a href="#" className="hover:text-amber-500 transition-colors">Privacy Policy</a>
@@ -86,6 +86,17 @@ export default function Footer() {
               <a href="#" className="hover:text-amber-500 transition-colors">Cookie Policy</a>
             </div>
           </div>
+        </div>
+
+        <div className="mt-8 pt-8 border-t border-gray-800 text-center">
+          <a
+            href="https://tytantech.co.ke"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center text-sm text-gray-400 hover:text-amber-500 transition-colors"
+          >
+            Powered by TytanTech <Link className="ml-1.5 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
         </div>
       </div>
     </footer>
